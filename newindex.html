@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark's Start Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --text: #111111;
+      --muted-text: #555555;
+      --accent: #0b5394;
+      --accent-soft: #e7f1fb;
+      --border-subtle: #e0e0e0;
+      --shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121212;
+        --card-bg: #1f1f1f;
+        --text: #f5f5f7;
+        --muted-text: #aaaaaa;
+        --accent-soft: rgba(11,83,148,0.3);
+        --border-subtle: #333333;
+        --shadow: 0 2px 6px rgba(0,0,0,0.65);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .page-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      margin: 0 0 4px;
+      font-size: 1.7rem;
+      font-weight: 600;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted-text);
+    }
+
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .section {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .section h2 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section h2 span.icon {
+      font-size: 1.1rem;
+    }
+
+    .links {
+      margin-top: 4px;
+    }
+
+    .link-item {
+      display: block;
+      padding: 6px 8px;
+      margin-top: 4px;
+      border-radius: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.05s ease;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .link-item:hover,
+    .link-item:focus-visible {
+      background: var(--accent-soft);
+      text-decoration: underline;
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .section-critical {
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+
+      header h1 {
+        font-size: 1.4rem;
+      }
+
+      .section {
+        padding: 12px 13px;
+      }
+
+      .link-item {
+        padding: 7px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <h1>Mark's Start Page</h1>
+      <p>Daily practice, financial, and tools links</p>
+    </header>
+
+    <div class="sections-grid">
+
+      <!-- Barrister / Court -->
+      <section class="section section-critical">
+        <h2><span class="icon">⚖️</span>Barrister &amp; Court</h2>
+        <div class="links">
+          <a class="link-item" href="#">Court Lists – Today</a>
+          <a class="link-item" href="#">Court Lists – Tomorrow</a>
+          <a class="link-item" href="#">Zoom Links to Courts</a>
+          <a class="link-item" href="#">Perth CMC</a>
+          <a class="link-item" href="#">Perth Plea/JLICMC/Set Date</a>
+          <a class="link-item" href="#">Perth JPT</a>
+          <a class="link-item" href="#">Perth Set Date</a>
+          <a class="link-item" href="#">Perth POA</a>
+          <a class="link-item" href="#">Brockville CMC Bails</a>
+          <a class="link-item" href="#">Brockville Plea</a>
+          <a class="link-item" href="#">Brockville JLICMC</a>
+          <a class="link-item" href="#">Brockville Trial Setting</a>
+          <a class="link-item" href="#">Brockville POA</a>
+          <a class="link-item" href="#">Ottawa CMC #14 Adult (T–F)</a>
+          <a class="link-item" href="#">Ottawa CMC #8 Fed (Tues)</a>
+        </div>
+      </section>
+
+      <!-- Legal Practice -->
+      <section class="section">
+        <h2><span class="icon">📚</span>Legal Practice</h2>
+        <div class="links">
+          <a class="link-item" href="#">Legal Aid Online</a>
+          <a class="link-item" href="#">Digital (Prov) Disclosure Hub</a>
+          <a class="link-item" href="#">Federal Disclosure Hub</a>
+          <a class="link-item" href="#">Evidence.com - Axon</a>
+          <a class="link-item" href="#">LAO Tariff and Billing Handbook</a>
+          <a class="link-item" href="#">Court Cases Online Search</a>
+          <a class="link-item" href="#">Criminal Law Notebook</a>
+          <a class="link-item" href="#">CanLII</a>
+          <a class="link-item" href="#">LSO Connects</a>
+          <a class="link-item" href="#">LawPro</a>
+        </div>
+      </section>
+
+      <!-- Real Estate -->
+      <section class="section">
+        <h2><span class="icon">🏠</span>Real Estate</h2>
+        <div class="links">
+          <a class="link-item" href="#">MyTeranetConnect™</a>
+          <a class="link-item" href="#">LDD Connect - Application Login</a>
+          <a class="link-item" href="#">Login to Teraview</a>
+          <a class="link-item" href="#">s. 5 LTT Through Teranet Express</a>
+          <a class="link-item" href="#">Stewart Title</a>
+          <a class="link-item" href="#">Personal Property Lien: Enquiry</a>
+          <a class="link-item" href="#">LLC</a>
+          <a class="link-item" href="#">Ontario Business Connects</a>
+          <a class="link-item" href="#">TreeFort ID TF100287</a>
+          <a class="link-item" href="#">PortasPASS</a>
+        </div>
+      </section>
+
+      <!-- Financial -->
+      <section class="section">
+        <h2><span class="icon">💰</span>Financial</h2>
+        <div class="links">
+          <a class="link-item" href="#">RBC – Secure Sign In</a>
+          <a class="link-item" href="#">Log in to Questrade</a>
+          <a class="link-item" href="#">Interactive Brokers</a>
+          <a class="link-item" href="#">Coinbase</a>
+          <a class="link-item" href="#">You Know</a>
+        </div>
+      </section>
+
+      <!-- AI Tools -->
+      <section class="section">
+        <h2><span class="icon">🤖</span>AI Tools</h2>
+        <div class="links">
+          <a class="link-item" href="#">NotebookLM</a>
+          <a class="link-item" href="#">ChatGPT</a>
+          <a class="link-item" href="#">Sign in</a>
+          <a class="link-item" href="#">Perplexity</a>
+          <a class="link-item" href="#">Google Gemini</a>
+          <a class="link-item" href="#">Grok</a>
+          <a class="link-item" href="#">Consensus</a>
+          <a class="link-item" href="#">Microsoft Copilot: Your AI companion</a>
+          <a class="link-item" href="#">DeepSeek</a>
+        </div>
+      </section>
+
+      <!-- Sign in and portals -->
+      <section class="section">
+        <h2><span class="icon">🔐</span>Sign In &amp; Portals</h2>
+        <div class="links">
+          <a class="link-item" href="#">Zoom</a>
+          <a class="link-item" href="#">Office</a>
+          <a class="link-item" href="#">VoIP.ms</a>
+          <a class="link-item" href="#">Docusign Login</a>
+          <a class="link-item" href="#">Gmail</a>
+          <a class="link-item" href="#">Adobe</a>
+          <a class="link-item" href="#">Microsoft Entra</a>
+          <a class="link-item" href="#">Sign in to Microsoft account</a>
+        </div>
+      </section>
+
+      <!-- Health -->
+      <section class="section">
+        <h2><span class="icon">🩺</span>Health</h2>
+        <div class="links">
+          <a class="link-item" href="#">Mark's NP Booking</a>
+          <a class="link-item" href="#">MyCareCompass</a>
+        </div>
+      </section>
+
+      <!-- Search Engines -->
+      <section class="section">
+        <h2><span class="icon">🔎</span>Search Engines</h2>
+        <div class="links">
+          <a class="link-item" href="#">Microsoft Bing</a>
+          <a class="link-item" href="#">Google</a>
+          <a class="link-item" href="#">DuckDuckGo</a>
+          <a class="link-item" href="#">Gibiru</a>
+        </div>
+      </section>
+
+      <!-- Automated Legal Scripts -->
+      <section class="section">
+        <h2><span class="icon">🧾</span>Automated Legal Scripts</h2>
+        <div class="links">
+          <a class="link-item" href="#">documentarior</a>
+        </div>
+      </section>
+
+      <!-- Misc -->
+      <section class="section">
+        <h2><span class="icon">📎</span>Misc</h2>
+        <div class="links">
+          <a class="link-item" href="#">Pool Guest Access</a>
+          <a class="link-item" href="#">Where's Willy? ® 2.4 -- Track Your Dollar Bills</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</body>
+</html>
