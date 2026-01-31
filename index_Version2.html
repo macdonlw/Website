@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mark's Start Page v.1.3 20260131c</title>
+
+  <!--
+    Minimal, easy-to-edit dark theme.
+    - Edit colors below in :root variables.
+    - Keep HTML structure — categories are simple <article class="category"> blocks.
+    - Search input filters links by text.
+  -->
+
+  <style>
+    /* -----------------------------
+       Theme variables — edit these
+       ----------------------------- */
+    :root{
+      --bg: #0b0f14;            /* page background */
+      --surface: #0f1720;       /* card background */
+      --muted: #9aa4b2;         /* secondary text */
+      --text: #e6eef8;          /* primary text */
+      --accent: #58a6ff;        /* link color */
+      --accent-600: #2f7bd9;
+      --card-border: rgba(255,255,255,0.03);
+      --shadow: 0 6px 18px rgba(2,6,12,0.6);
+      --radius: 10px;
+      --gap: 1rem;
+      --max-width: 1200px;
+      --focus: rgba(88,166,255,0.18);
+    }
+
+    /* -----------------------------
+       Simple reset & base styles
+       ----------------------------- */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:1.5rem;
+      line-height:1.35;
+    }
+
+    .wrap{
+      max-width:var(--max-width);
+      margin:0 auto;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      margin-bottom:1rem;
+    }
+
+    h1{
+      margin:0;
+      font-size:1.25rem;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:0.92rem;
+      margin-top:0.2rem;
+    }
+
+    /* -----------------------------
+       Search control (small & simple)
+       ----------------------------- */
+    .controls{
+      display:flex;
+      gap:0.5rem;
+      align-items:center;
+    }
+    .search {
+      background:var(--surface);
+      border:1px solid var(--card-border);
+      padding:0.35rem 0.5rem;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+    }
+    .search input{
+      background:transparent;
+      border:0;
+      color:var(--text);
+      outline:none;
+      width:210px;
+      font-size:0.95rem;
+    }
+    .search svg{opacity:0.8}
+
+    /* -----------------------------
+       Responsive grid & cards
+       ----------------------------- */
+    .grid-container{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap:var(--gap);
+    }
+
+    .category{
+      background:var(--surface);
+      border-radius:var(--radius);
+      padding:0.9rem;
+      border:1px solid var(--card-border);
+      box-shadow:var(--shadow);
+      transition:transform .12s ease, box-shadow .12s ease;
+      display:flex;
+      flex-direction:column;
+      min-height:120px;
+    }
+    .category:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(2,6,12,0.7); }
+
+    .category h2{
+      margin:0 0 0.45rem 0;
+      font-size:1rem;
+      color:var(--text);
+    }
+
+    ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.28rem; }
+    li a{
+      color:var(--accent);
+      text-decoration:none;
+      display:block;
+      padding:0.15rem 0.2rem;
+      border-radius:6px;
+    }
+    li a:hover{ color:var(--accent-600); text-decoration:underline; }
+
+    .muted{ color:var(--muted); font-size:0.92rem; }
+
+    a:focus{
+      outline:3px solid var(--focus);
+      outline-offset:3px;
+      border-radius:6px;
+    }
+
+    .no-results{ grid-column:1/-1; color:var(--muted); text-align:center; padding:1rem; }
+
+    /* small screens */
+    @media (max-width:560px){
+      .search input{ width:120px; }
+      h1{ font-size:1.05rem; }
+      body{ padding:1rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div>
+        <h1>📁 Mark's Start Page</h1>
+        <div class="subtitle">Quick links — minimal dark theme, easy to edit</div>
+      </div>
+
+      <div class="controls">
+        <div class="search" role="search" aria-label="Filter links">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+            <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.5"></circle>
+          </svg>
+          <input id="filter" type="search" placeholder="Search links..." aria-label="Search links">
+        </div>
+      </div>
+    </header>
+
+    <div class="grid-container" id="grid">
+
+      <article class="category" aria-labelledby="barrister-title">
+        <h2 id="barrister-title">Barrister</h2>
+        <ul>
+          <li><a href="https://www.ontariocourtdates.ca/" target="_blank" rel="noopener noreferrer">Court Lists – Today</a></li>
+          <li><a href="https://www.ontariocourtdates.ca/tomorrow/" target="_blank" rel="noopener noreferrer">Court Lists – Tomorrow</a></li>
+        </ul>
+
+        <h3 class="muted" style="margin-top:0.6rem;margin-bottom:0.25rem;font-weight:600;">Zoom Links to Courts</h3>
+        <ul>
+          <li><a href="zoommtg://zoom.us/join?confno=69876168540&pwd=343847&uname=CSL02%20MacDonald%2C%20Mark" target="_blank" rel="noopener noreferrer">Perth CMC</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=63868731509&pwd=&uname=CSL02%20MacDonald%2C%20Mark" target="_blank" rel="noopener noreferrer">Perth Plea/JLICMC/Set Date</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=67083368785&pwd=&uname=MacDonald%2C%20Mark%20P%20Csl02" target="_blank" rel="noopener noreferrer">Perth JPT</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=63398638097&pwd=&uname=MacDonald%2C%20Mark%20P%20Csl02" target="_blank" rel="noopener noreferrer">Perth Set Date</a></li>
+
+          <li><a href="zoommtg://zoom.us/join?confno=6377654797&pwd=&uname=CSL02%20MacDonald%2C%20Mark" target="_blank" rel="noopener noreferrer">Perth POA</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=65541926591&pwd=957534&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville CMC Bails</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=62792499193&pwd=103482&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville Plea</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=65442004362&pwd=194440&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville JLICMC</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=63211821672&pwd=045789&uname=MacDonald%2C%20Mark%20Counsel" target="_blank" rel="noopener noreferrer">Brockville Trial Setting</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=8238226801&pwd=&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville POA</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=64812203132&pwd=606263&uname=MacDonald%20Law%20Office%20Csl02" target="_blank" rel="noopener noreferrer">Ottawa CMC Adult Prov T-F</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=64628108539&pwd=514752&uname=MacDonald%20Law%20Office%20Csl02" target="_blank" rel="noopener noreferrer">Ottawa CMC Adult Fed T</a></li>
+          <li><a href="zoommtg://zoom.us/join?confno=68465588521&pwd=531108&uname=MacDonald%2C%20M%20Csl02" target="_blank" rel="noopener noreferrer">Kingston CMC</a></li>
+        </ul>
+      </article>
+
+      <article class="category" aria-labelledby="legal-title">
+        <h2 id="legal-title">Legal Practice</h2>
+        <ul>
+          <li><a href="https://legalaidonline.on.ca/" target="_blank" rel="noopener noreferrer">Legal Aid Online</a></li>
+          <li><a href="https://www.digitaldisclosure.mag.gov.on.ca/Home/Lang?culture=cultName" target="_blank" rel="noopener noreferrer">Digital (Prov) Disclosure Hub</a></li>
+          <li><a href="https://ppsc-sppc.titanfile.com/notifications/" target="_blank" rel="noopener noreferrer">Federal Disclosure Hub</a></li>
+          <li><a href="https://id.ca.evidence.com/login" target="_blank" rel="noopener noreferrer">Evidence.com - Axon</a></li>
+          <li><a href="https://www.legalaid.on.ca/wp-content/uploads/LAO-tariff-and-billing-handbook-EN.pdf" target="_blank" rel="noopener noreferrer">LAO Tariff and Billing Handbook</a></li>
+          <li><a href="https://www.ontario.ca/page/search-court-cases-online" target="_blank" rel="noopener noreferrer">Court Cases Online Search</a></li>
+          <li><a href="https://criminalnotebook.ca/" target="_blank" rel="noopener noreferrer">Criminal Law Notebook</a></li>
+          <li><a href="https://canlii.org" target="_blank" rel="noopener noreferrer">CanLII</a></li>
+          <li><a href="https://lsoconnects.lso.ca/" target="_blank" rel="noopener noreferrer">LSO Connects</a></li>
+          <li><a href="https://my.lawpro.ca/welcome" target="_blank" rel="noopener noreferrer">LawPro</a></li>
+        </ul>
+      </article>
+
+      <article class="category" aria-labelledby="signin-title">
+        <h2 id="signin-title">Sign in and Portals</h2>
+        <ul>
+          <li><a href="https://www.zoom.us/signin#/login" target="_blank" rel="noopener noreferrer">Zoom</a></li>
+          <li><a href="https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?client_id=4765445b-32c6-49b0-83e6-1d93765276ca&redirect_uri=https%3A%2F%2Fm365.cloud.microsoft%2Flandingv2&response[...]" target="_blank" rel="noopener noreferrer">Microsoft Login (org)</a></li>
+          <li><a href="https://voip.ms/signin/index.php?ln=en" target="_blank" rel="noopener noreferrer">VoIP.ms</a></li>
+          <li><a href="https://account.docusign.com/oauth/auth?response_type=code&scope=all%20click.manage%20me_profile%20room_forms%20room_fields%20inproductcommunication_read%20data_explorer_signing_insight[...]" target="_blank" rel="noopener noreferrer">DocuSign</a></li>
+          <li><a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener noreferrer">Gmail</a></li>
+          <li><a href="https://macdlaw-admin.sharepoint.com/_layouts/15/online/AdminHome.aspx#/home" target="_blank" rel="noopener noreferrer">Microsoft Sharepoint Admin Centre</a></li>
+          <li><a href="https://entra.microsoft.com/#view/Microsoft_AAD_IAM/EntraLanding.ReactView" target="_blank" rel="noopener noreferrer">Microsoft Entra</a></li>
+          <li><a href="https://admin.cloud.microsoft/?#/homepage" target="_blank" rel="noopener noreferrer">Microsoft Admin Centre</a></li>
+          <li><a href="https://admin.exchange.microsoft.com/#/" target="_blank" rel="noopener noreferrer">Exchange Admin Centre</a></li>
+          <li><a href="https://entra.microsoft.com/#view/Microsoft_AAD_IAM/TenantOverview.ReactView" target="_blank" rel="noopener noreferrer">Microsoft Entra Admin Centre</a></li>
+          <li><a href="https://purview.microsoft.com/home?tid=7dda4366-6f7a-4f64-b9f3-19a1bae0294f" target="_blank" rel="noopener noreferrer">Microsoft Purview/Compliance Portal</a></li>
+          <li><a href="https://intune.microsoft.com/#home" target="_blank" rel="noopener noreferrer">Microsoft InTune</a></li>
+          <li><a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=8c59ead7-d703-4a27-9e55-c96a0054c8d2&scope=openid%20profile%20offline_access&redirect_uri=https%3A%2F%2Fmyaccoun[...]" target="_blank" rel="noopener noreferrer">Microsoft Account</a></li>
+        </ul>
+      </article>
+
+      <article class="category" aria-labelledby="realestate-title">
+        <h2 id="realestate-title">Legal Real Estate</h2>
+        <ul>
+          <li><a href="https://my.teranetconnect.ca/registration/tvDesktopLogin.form" target="_blank" rel="noopener noreferrer">MyTeranetConnect™</a></li>
+          <li><a href="https://www.lawyerdonedeal.com/loginldd.html" target="_blank" rel="noopener noreferrer">LDD Connect - Application Login</a></li>
+          <li><a href="https://www.teraviewereg.ca/TvApp/Login.jsp?language=en" target="_blank" rel="noopener noreferrer">Login to Teraview</a></li>
+          <li><a href="https://www.teranetexpress.ca/csp/land-transfer-tax-info-login" target="_blank" rel="noopener noreferrer">s. 5 LTT Through Teranet Express</a></li>
+          <li><a href="https://identity.stewart-intl.com/error?reference=c59047d9-5bfa-46c9-bf40-713d190ee613" target="_blank" rel="noopener noreferrer">Stewart Title</a></li>
+          <li><a href="https://www.ontario.ca/page/personal-property-liens" target="_blank" rel="noopener noreferrer">Personal Property Lien: Enquiry</a></li>
+          <li><a href="https://llc.firstcdn.com/Profile/Login.aspx?ApplicationType=LLC&" target="_blank" rel="noopener noreferrer">LLC</a></li>
+          <li><a href="https://signin.ontario.ca/oauth2/aus2957lteAY4cRQK5d7/v1/authorize?lang=en&response_type=code&client_id=0oaakfq5ibX1kT4Er5d7&scope=openid+profile&state=ZbUtOKPBhKDPndYgfZX3PB0Ee5EU6qc[...]" target="_blank" rel="noopener noreferrer">Ontario Sign-in</a></li>
+          <li><a href="https://auth.treeforttech.com/Account/Login?ReturnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fclient_id%3D8ABCDB6EA332421CAA8EF4FE3C0B1CBB%26redirect_uri%3Dhttp%253A%252F%252Fweb.treefort[...]" target="_blank" rel="noopener noreferrer">Treefort Auth</a></li>
+          <li><a href="https://www.portaspass.ca/portas/login" target="_blank" rel="noopener noreferrer">PortasPASS</a></li>
+        </ul>
+      </article>
+
+      <article class="category" aria-labelledby="financial-title">
+        <h2 id="financial-title">Financial</h2>
+        <ul>
+          <li><a href="https://secure.royalbank.com/statics/login-service-ui/index#/full/signin?_gl=1*wi5dvm*_gcl_au*MTkwOTQyMTM0NC4xNzM1OTMyOTQ1*_ga*NTk2ODMzNzAzLjE3MzUzMDExNjg.*_ga_89NPCTDXQR*MTczODg2MDcxMC[...]" target="_blank" rel="noopener noreferrer">RBC Login</a></li>
+          <li><a href="https://login.questrade.com/account/login" target="_blank" rel="noopener noreferrer">Log in to Questrade</a></li>
+          <li><a href="https://ndcdyn.interactivebrokers.com/sso/Login?RL=1&locale=en_US" target="_blank" rel="noopener noreferrer">Interactive Brokers</a></li>
+          <li><a href="https://www.coinbase.com/home" target="_blank" rel="noopener noreferrer">Coinbase</a></li>
+          <li><a href="https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html&ved=2ahUKEwiGrrWi69WOAxURFmIAHZJiOEIQFnoECAsQAQ&usg=AOvVaw2qPozXtraWwXV0z_4hVLbb" target="_blank" rel="noopener noreferrer">You Know</a></li>
+        </ul>
+      </article>
+
+      <article class="category" aria-labelledby="ai-title">
+        <h2 id="ai-title">AI</h2>
+        <ul>
+          <li><a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer">Google Gemini</a></li>
+          <li><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></li>
+          <li><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></li>
+          <li><a href="https://copilot.microsoft.com/chats/QLxBagSuyj8NcaMCVgPN7" target="_blank" rel="noopener noreferrer">Microsoft Copilot: Your AI companion</a></li>
+          <li><a href="https://grok.com/" target="_blank" rel="noopener noreferrer">Grok</a></li>
+          <li><a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a></li>
+          <li><a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer">NotebookLM</a></li>
+          <li><a href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">DeepSeek</a></li>
+          <li><a href="https://zapier.com/" target="_blank" rel="noopener noreferrer">Zappier</a></li>
+        </ul>
+      </article>
+
+      <article class="category" aria-labelledby="health-title">
+        <h2 id="health-title">Health</h2>
+        <ul>
+          <li><a href="https://ocean.cognisantmd.com/intake/patients.html?linkRef=7c5b67b7-43ee-43fe-88e6-5fb10634dc2b#/online-booking" target="_blank" rel="noopener noreferrer">Mark's NP Booking</a></li>
+          <li><a href="https://login.on.mycarecompass.lifelabs.com/account/login?returnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fresponse_type%3Did_token%2520token%26client_id%3Dupp-on%26state%3DPk6z-PbFYiUSa[...]" target="_blank" rel="noopener noreferrer">LifeLabs</a></li>
+        </ul>
+      </article>
+
+      <article class="category" aria-labelledby="search-title">
+        <h2 id="search-title">Search Engines</h2>
+        <ul>
+          <li><a href="https://www.bing.com/" target="_blank" rel="noopener noreferrer">Microsoft Bing</a></li>
+          <li><a href="https://www.google.com/" target="_blank" rel="noopener noreferrer">Google</a></li>
+          <li><a href="https://duckduckgo.com/" target="_blank" rel="noopener noreferrer">DuckDuckGo</a></li>
+          <li><a href="https://gibiru.com/" target="_blank" rel="noopener noreferrer">Gibiru</a></li>
+        </ul>
+      </article>
+
+      <article class="category" aria-labelledby="scripts-title">
+        <h2 id="scripts-title">Automated Legal Scripts</h2>
+        <ul>
+          <li><a href="https://app.documentero.com/admin" target="_blank" rel="noopener noreferrer">documentarior</a></li>
+        </ul>
+      </article>
+
+      <article class="category" aria-labelledby="misc-title">
+        <h2 id="misc-title">Misc</h2>
+        <ul>
+          <li><a href="https://www.officepools.com/nhl/classic/auth/login" target="_blank" rel="noopener noreferrer">Pool Guest Access</a></li>
+          <li><a href="https://www.whereswilly.com/" target="_blank" rel="noopener noreferrer">Where's Willy? ® 2.4 -- Track Your Dollar Bills</a></li>
+        </ul>
+      </article>
+
+      <div class="no-results" id="noResults" hidden>No links match your search.</div>
+    </div>
+  </div>
+
+  <script>
+    // Add noopener noreferrer to any external links opened in new tabs (safety)
+    document.querySelectorAll('a[target="_blank"]').forEach(a => {
+      if (!a.rel.includes('noopener')) a.rel = (a.rel + ' noopener noreferrer').trim();
+    });
+
+    // Minimal client-side filter (searches visible text in cards)
+    (function(){
+      const input = document.getElementById('filter');
+      const cards = Array.from(document.querySelectorAll('.category'));
+      const noResults = document.getElementById('noResults');
+
+      input.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+        let any = false;
+        cards.forEach(card => {
+          const text = card.innerText.toLowerCase();
+          const show = q === '' || text.includes(q);
+          card.style.display = show ? '' : 'none';
+          if (show) any = true;
+        });
+        noResults.hidden = any;
+      });
+    })();
+  </script>
+</body>
+</html>
