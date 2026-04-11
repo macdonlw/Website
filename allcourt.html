@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>All Court Zoom Links</title>
+  <meta name="description" content="All court Zoom links — quick access to virtual courtrooms.">
+  <meta name="theme-color" content="#f6f8fb">
+
+  <style>
+    :root{
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --muted: #6b7280;
+      --text: #0b1720;
+      --accent: #0366d6;
+      --accent-600: #024fa8;
+      --card-border: rgba(2,6,12,0.06);
+      --shadow: 0 6px 18px rgba(2,6,12,0.06);
+      --radius: 10px;
+      --gap: 1rem;
+      --max-width: 1200px;
+      --focus: rgba(3,102,214,0.18);
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:1.5rem;
+      line-height:1.35;
+    }
+
+    .wrap{
+      max-width:var(--max-width);
+      margin:0 auto;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      margin-bottom:1rem;
+    }
+
+    h1{
+      margin:0;
+      font-size:1.25rem;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:0.92rem;
+      margin-top:0.2rem;
+    }
+
+    .back-link{
+      color:var(--accent);
+      text-decoration:none;
+      font-size:0.92rem;
+      display:inline-flex;
+      align-items:center;
+      gap:0.3rem;
+      padding:0.35rem 0.6rem;
+      border-radius:6px;
+      background:var(--surface);
+      border:1px solid var(--card-border);
+      box-shadow:var(--shadow);
+      transition:color .12s;
+    }
+    .back-link:hover{ color:var(--accent-600); text-decoration:underline; }
+
+    .skip-link{
+      position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;
+    }
+    .skip-link:focus{
+      position:static;left:auto;top:auto;width:auto;height:auto;
+      padding:0.5rem 0.75rem;background:var(--surface);border-radius:6px;
+      box-shadow:var(--shadow);margin-bottom:0.5rem;display:inline-block;
+    }
+    .sr-only{
+      position:absolute !important;height:1px;width:1px;
+      overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;
+    }
+
+    .controls{
+      display:flex;gap:0.5rem;align-items:center;
+    }
+    .search{
+      background:var(--surface);border:1px solid var(--card-border);
+      padding:0.35rem 0.5rem;border-radius:999px;
+      display:flex;align-items:center;gap:0.5rem;box-shadow:var(--shadow);
+    }
+    .search input{
+      background:transparent;border:0;color:var(--text);
+      outline:none;width:210px;font-size:0.95rem;
+    }
+    .search svg{opacity:0.8}
+
+    .grid-container{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap:var(--gap);
+    }
+
+    .category{
+      background:var(--surface);
+      border-radius:var(--radius);
+      padding:0.9rem;
+      border:1px solid var(--card-border);
+      box-shadow:var(--shadow);
+      transition:transform .12s ease, box-shadow .12s ease;
+      display:flex;
+      flex-direction:column;
+      min-height:120px;
+    }
+    .category:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(2,6,12,0.08); }
+
+    .category h2{
+      margin:0 0 0.45rem 0;
+      font-size:1rem;
+      color:var(--text);
+    }
+
+    ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.28rem; }
+    li a{
+      color:var(--accent);
+      text-decoration:none;
+      display:block;
+      padding:0.15rem 0.2rem;
+      border-radius:6px;
+    }
+    li a:hover{ color:var(--accent-600); text-decoration:underline; }
+
+    .muted{ color:var(--muted); font-size:0.92rem; }
+
+    a:focus{
+      outline:3px solid var(--focus);
+      outline-offset:3px;
+      border-radius:6px;
+    }
+
+    .no-results{ grid-column:1/-1; color:var(--muted); text-align:center; padding:1rem; }
+
+    @media (max-width:560px){
+      .search input{ width:120px; }
+      h1{ font-size:1.05rem; }
+      body{ padding:1rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#grid">Skip to content</a>
+
+  <main class="wrap" role="main">
+    <header>
+      <div>
+        <h1>All Court Zoom Links</h1>
+        <div class="subtitle"><a href="index.html" class="back-link">&larr; Back to Start Page</a></div>
+      </div>
+
+      <div class="controls">
+        <div class="search" role="search" aria-label="Filter links">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+            <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.5"></circle>
+          </svg>
+          <label for="filter" class="sr-only">Search links</label>
+          <input id="filter" type="search" placeholder="Search links (press /)" aria-label="Search links" aria-describedby="searchHelp searchStatus">
+        </div>
+      </div>
+    </header>
+
+    <nav aria-label="Court Zoom links">
+      <div class="grid-container" id="grid">
+
+        <article class="category" aria-labelledby="perth-title">
+          <h2 id="perth-title">Perth</h2>
+          <ul>
+            <li><a href="zoommtg://zoom.us/join?confno=69876168540&pwd=343847&uname=CSL02%20MacDonald%2C%20Mark" target="_blank" rel="noopener noreferrer">Perth CMC</a></li>
+            <li><a href="zoommtg://zoom.us/join?confno=63868731509&pwd=&uname=CSL02%20MacDonald%2C%20Mark" target="_blank" rel="noopener noreferrer">Perth Plea/JLICMC/Set Date</a></li>
+            <li><a href="zoommtg://zoom.us/join?confno=67083368785&pwd=&uname=MacDonald%2C%20Mark%20P%20Csl02" target="_blank" rel="noopener noreferrer">Perth JPT</a></li>
+            <li><a href="zoommtg://zoom.us/join?confno=63398638097&pwd=&uname=MacDonald%2C%20Mark%20P%20Csl02" target="_blank" rel="noopener noreferrer">Perth Set Date</a></li>
+            <li><a href="zoommtg://zoom.us/join?confno=6377654797&pwd=&uname=CSL02%20MacDonald%2C%20Mark" target="_blank" rel="noopener noreferrer">Perth POA</a></li>
+          </ul>
+        </article>
+
+        <article class="category" aria-labelledby="brockville-title">
+          <h2 id="brockville-title">Brockville</h2>
+          <ul>
+            <li><a href="zoommtg://zoom.us/join?confno=65541926591&pwd=957534&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville CMC Bails</a></li>
+            <li><a href="zoommtg://zoom.us/join?confno=62792499193&pwd=103482&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville Plea</a></li>
+            <li><a href="zoommtg://zoom.us/join?confno=65442004362&pwd=194440&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville JLICMC</a></li>
+            <li><a href="zoommtg://zoom.us/join?confno=63211821672&pwd=045789&uname=MacDonald%2C%20Mark%20Counsel" target="_blank" rel="noopener noreferrer">Brockville Trial Setting</a></li>
+            <li><a href="zoommtg://zoom.us/join?confno=8238226801&pwd=&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville POA</a></li>
+          </ul>
+        </article>
+
+        <article class="category" aria-labelledby="ottawa-title">
+          <h2 id="ottawa-title">Ottawa</h2>
+          <ul>
+            <li><a href="zoommtg://zoom.us/join?confno=64812203132&pwd=606263&uname=MacDonald%20Law%20Office%20Csl02" target="_blank" rel="noopener noreferrer">Ottawa CMC Adult Prov T-F</a></li>
+            <li><a href="zoommtg://zoom.us/join?confno=64628108539&pwd=514752&uname=MacDonald%20Law%20Office%20Csl02" target="_blank" rel="noopener noreferrer">Ottawa CMC Adult Fed T</a></li>
+          </ul>
+        </article>
+
+        <article class="category" aria-labelledby="kingston-title">
+          <h2 id="kingston-title">Kingston</h2>
+          <ul>
+            <li><a href="zoommtg://zoom.us/join?confno=68465588521&pwd=531108&uname=MacDonald%2C%20M%20Csl02" target="_blank" rel="noopener noreferrer">Kingston CMC</a></li>
+          </ul>
+        </article>
+
+        <div class="no-results" id="noResults" hidden>No links match your search.</div>
+      </div>
+    </nav>
+
+    <div id="searchHelp" class="muted" style="margin-top:0.6rem;">Tip: press <kbd>/</kbd> to focus search. Matching checks link text and URL.</div>
+    <div id="searchStatus" role="status" aria-live="polite" class="muted" style="margin-top:0.25rem;display:none;"></div>
+  </main>
+
+  <script>
+    document.querySelectorAll('a[target="_blank"]').forEach(a => {
+      if (!a.rel.includes('noopener')) a.rel = (a.rel + ' noopener noreferrer').trim();
+    });
+
+    (function(){
+      const input = document.getElementById('filter');
+      if (!input) return;
+      const cards = Array.from(document.querySelectorAll('.category'));
+      const noResults = document.getElementById('noResults');
+      const status = document.getElementById('searchStatus');
+
+      function debounce(fn, wait=150){
+        let t;
+        return (...args)=>{ clearTimeout(t); t = setTimeout(()=>fn(...args), wait); };
+      }
+
+      function normalize(s){ return String(s||'').trim().toLowerCase(); }
+
+      function filter(){
+        const q = normalize(input.value);
+        let visibleLinkCount = 0;
+        cards.forEach(card => {
+          const lis = Array.from(card.querySelectorAll('li'));
+          let cardHasMatch = false;
+          lis.forEach(li => {
+            const a = li.querySelector('a');
+            const text = normalize(a && a.textContent);
+            const href = normalize(a && a.href);
+            const match = q === '' || text.includes(q) || href.includes(q);
+            li.style.display = match ? '' : 'none';
+            if (match) { cardHasMatch = true; visibleLinkCount++; }
+          });
+          card.style.display = cardHasMatch ? '' : 'none';
+        });
+
+        if (visibleLinkCount === 0 && q !== '') {
+          noResults.hidden = false;
+        } else {
+          noResults.hidden = true;
+        }
+
+        if (q === '') {
+          status.style.display = 'none';
+          status.textContent = '';
+        } else {
+          status.style.display = '';
+          status.textContent = visibleLinkCount === 0 ? 'No links match your search.' : visibleLinkCount + (visibleLinkCount === 1 ? ' link shown.' : ' links shown.');
+        }
+      }
+
+      filter();
+
+      input.addEventListener('input', debounce(filter, 150));
+
+      document.addEventListener('keydown', (e) => {
+        const tag = document.activeElement && document.activeElement.tagName;
+        if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          e.preventDefault();
+          input.focus();
+          const val = input.value;
+          input.value = '';
+          input.value = val;
+        }
+        if (e.key === 'Escape' && (document.activeElement === input)) {
+          input.value = '';
+          filter();
+          input.blur();
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
