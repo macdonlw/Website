@@ -3,301 +3,843 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>All Court Zoom Links</title>
-  <meta name="description" content="All court Zoom links — quick access to virtual courtrooms.">
-  <meta name="theme-color" content="#f6f8fb">
+  <title>Court Zoom Directory</title>
+  <meta name="description" content="Virtual courtroom directory with quick join, pinned courts, and naming protocol.">
+  <meta name="theme-color" content="#0a1220">
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
     :root{
-      --bg: #f6f8fb;
-      --surface: #ffffff;
-      --muted: #6b7280;
-      --text: #0b1720;
-      --accent: #0366d6;
-      --accent-600: #024fa8;
-      --card-border: rgba(2,6,12,0.06);
-      --shadow: 0 6px 18px rgba(2,6,12,0.06);
-      --radius: 10px;
-      --gap: 1rem;
+      --bg: #0a1220;
+      --surface: #131c2e;
+      --surface-2: #1a2438;
+      --surface-hover: #1f2a40;
+      --border: rgba(255,255,255,0.06);
+      --border-strong: rgba(255,255,255,0.1);
+      --text: #e6ecf5;
+      --text-secondary: #b0bdcf;
+      --muted: #6c7a91;
+      --accent: #3b82f6;
+      --accent-hover: #5294f6;
+      --accent-soft: rgba(59,130,246,0.15);
+      --success: #10b981;
+      --gold: #fbbf24;
+      --radius: 12px;
+      --radius-sm: 8px;
       --max-width: 1200px;
-      --focus: rgba(3,102,214,0.18);
     }
 
     *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
+    html{height:100%}
     body{
       margin:0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      min-height:100%;
+      font-family:'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:var(--bg);
+      background-image:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,130,246,0.08) 0%, transparent 70%),
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0);
+      background-size: auto, 24px 24px;
       color:var(--text);
       -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding:1.5rem;
-      line-height:1.35;
+      line-height:1.5;
+      font-size:14px;
     }
 
-    .wrap{
+    .container{
       max-width:var(--max-width);
       margin:0 auto;
+      padding:0 1.5rem;
     }
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:1rem;
-      margin-bottom:1rem;
+    /* Top bar */
+    .topbar{
+      background:var(--surface);
+      border-bottom:1px solid var(--border);
+      padding:0.85rem 0;
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(12px);
     }
-
-    h1{
-      margin:0;
-      font-size:1.25rem;
+    .topbar-inner{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:0 1.5rem;
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;
     }
-
-    .subtitle{
-      color:var(--muted);
-      font-size:0.92rem;
-      margin-top:0.2rem;
-    }
-
+    .topbar-left{display:flex;align-items:center;gap:1rem}
     .back-link{
-      color:var(--accent);
-      text-decoration:none;
-      font-size:0.92rem;
-      display:inline-flex;
-      align-items:center;
-      gap:0.3rem;
-      padding:0.35rem 0.6rem;
-      border-radius:6px;
-      background:var(--surface);
-      border:1px solid var(--card-border);
-      box-shadow:var(--shadow);
-      transition:color .12s;
+      color:var(--muted);text-decoration:none;font-size:0.85rem;
+      display:inline-flex;align-items:center;gap:0.3rem;
+      padding:0.35rem 0.5rem;border-radius:6px;
+      transition:color .12s, background .12s;
     }
-    .back-link:hover{ color:var(--accent-600); text-decoration:underline; }
+    .back-link:hover{color:var(--text);background:var(--surface-2)}
 
-    .skip-link{
-      position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;
-    }
-    .skip-link:focus{
-      position:static;left:auto;top:auto;width:auto;height:auto;
-      padding:0.5rem 0.75rem;background:var(--surface);border-radius:6px;
-      box-shadow:var(--shadow);margin-bottom:0.5rem;display:inline-block;
-    }
-    .sr-only{
-      position:absolute !important;height:1px;width:1px;
-      overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;
+    .brand{display:flex;align-items:center;gap:0.5rem;font-weight:600;font-size:0.95rem}
+    .brand-icon{
+      width:28px;height:28px;
+      background:linear-gradient(135deg, #3b82f6, #1e40af);
+      border-radius:7px;
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;
     }
 
-    .controls{
-      display:flex;gap:0.5rem;align-items:center;
+    .topbar-right{display:flex;align-items:center;gap:1rem}
+    .status-pill{
+      display:inline-flex;align-items:center;gap:0.4rem;
+      padding:0.3rem 0.7rem;
+      background:rgba(16,185,129,0.1);
+      border:1px solid rgba(16,185,129,0.25);
+      border-radius:999px;
+      font-size:0.75rem;color:var(--success);font-weight:500;
     }
-    .search{
-      background:var(--surface);border:1px solid var(--card-border);
-      padding:0.35rem 0.5rem;border-radius:999px;
-      display:flex;align-items:center;gap:0.5rem;box-shadow:var(--shadow);
+    .status-pill::before{
+      content:'';width:6px;height:6px;border-radius:50%;background:var(--success);
+      box-shadow:0 0 8px rgba(16,185,129,0.6);
     }
-    .search input{
-      background:transparent;border:0;color:var(--text);
-      outline:none;width:210px;font-size:0.95rem;
+    .user-info{display:flex;align-items:center;gap:0.6rem}
+    .user-text{text-align:right;line-height:1.2}
+    .user-name{font-size:0.85rem;font-weight:600;color:var(--text)}
+    .user-role{font-size:0.7rem;color:var(--muted)}
+    .user-avatar{
+      width:36px;height:36px;border-radius:50%;
+      background:linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:600;font-size:0.85rem;
     }
-    .search svg{opacity:0.8}
 
-    .grid-container{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap:var(--gap);
+    /* Page header */
+    .page-header{
+      padding:2rem 0 1.5rem;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;
+      flex-wrap:wrap;
     }
-
-    .category{
-      background:var(--surface);
-      border-radius:var(--radius);
-      padding:0.9rem;
-      border:1px solid var(--card-border);
-      box-shadow:var(--shadow);
-      transition:transform .12s ease, box-shadow .12s ease;
-      display:flex;
-      flex-direction:column;
-      min-height:120px;
+    h1{
+      margin:0 0 0.5rem;
+      font-size:1.85rem;font-weight:700;letter-spacing:-0.02em;color:#fff;
     }
-    .category:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(2,6,12,0.08); }
+    .page-desc{
+      color:var(--text-secondary);font-size:0.9rem;margin:0;max-width:560px;line-height:1.55;
+    }
+    .name-format-link{
+      color:var(--accent);font-weight:500;cursor:pointer;text-decoration:none;
+      border-bottom:1px dashed rgba(59,130,246,0.4);
+    }
+    .name-format-link:hover{color:var(--accent-hover);border-bottom-color:var(--accent-hover)}
 
-    .category h2{
-      margin:0 0 0.45rem 0;
-      font-size:1rem;
+    .header-actions{display:flex;gap:0.5rem;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:0.4rem;
+      padding:0.5rem 0.9rem;
+      background:var(--surface-2);
+      border:1px solid var(--border);
       color:var(--text);
+      border-radius:var(--radius-sm);
+      font-size:0.82rem;font-weight:500;
+      cursor:pointer;text-decoration:none;
+      transition:background .12s, border-color .12s;
+      font-family:inherit;
     }
+    .btn:hover{background:var(--surface-hover);border-color:var(--border-strong)}
+    .btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+    .btn-primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+    .btn svg{flex-shrink:0}
 
-    ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.28rem; }
-    li a{
+    /* Search bar */
+    .search-bar{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:0.5rem;
+      display:flex;gap:0.5rem;
+      margin-bottom:1.5rem;
+    }
+    .search-input{
+      flex:1;
+      display:flex;align-items:center;gap:0.5rem;
+      padding:0.5rem 0.75rem;
+      background:transparent;
+    }
+    .search-input svg{color:var(--muted);flex-shrink:0}
+    .search-input input{
+      flex:1;background:transparent;border:0;color:var(--text);outline:none;
+      font-size:0.9rem;font-family:inherit;
+    }
+    .search-input input::placeholder{color:var(--muted)}
+
+    .filter-select{
+      display:flex;align-items:center;gap:0.5rem;
+      padding:0.5rem 0.85rem;
+      background:var(--surface-2);
+      border:1px solid var(--border);
+      border-radius:var(--radius-sm);
+      color:var(--text);font-size:0.85rem;
+      cursor:pointer;
+      font-family:inherit;
+      min-width:160px;
+    }
+    .filter-select:focus{outline:none;border-color:var(--accent)}
+    select.filter-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236c7a91' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 0.7rem center;padding-right:2rem}
+
+    /* Section titles */
+    .section{margin-bottom:2rem}
+    .section-title{
+      display:flex;align-items:center;gap:0.5rem;
+      font-size:1rem;font-weight:600;color:var(--text);
+      margin:0 0 0.85rem;
+    }
+    .section-title svg{color:var(--gold)}
+
+    /* Cards */
+    .pinned-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+      gap:1rem;
+    }
+    .court-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-left:3px solid var(--accent);
+      border-radius:var(--radius);
+      padding:1rem 1.1rem;
+      display:flex;flex-direction:column;
+      transition:border-color .15s, transform .15s;
+    }
+    .court-card:hover{border-color:var(--border-strong)}
+    .card-top{
+      display:flex;align-items:flex-start;justify-content:space-between;
+      margin-bottom:0.8rem;
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:0.3rem;
+      padding:0.2rem 0.55rem;
+      background:var(--accent-soft);
       color:var(--accent);
+      border-radius:5px;
+      font-size:0.65rem;font-weight:600;
+      text-transform:uppercase;letter-spacing:0.05em;
+    }
+    .badge.scj{background:rgba(239,68,68,0.12);color:#fca5a5}
+    .badge.poa{background:rgba(251,191,36,0.12);color:#fcd34d}
+    .badge.family{background:rgba(168,85,247,0.12);color:#c4b5fd}
+    .star-btn{
+      background:transparent;border:0;padding:0.15rem;cursor:pointer;color:var(--muted);
+      display:flex;align-items:center;border-radius:4px;
+      transition:color .12s, background .12s;
+    }
+    .star-btn:hover{background:var(--surface-2)}
+    .star-btn.pinned{color:var(--gold)}
+    .star-btn.pinned svg{fill:var(--gold)}
+
+    .card-city{
+      font-size:1.15rem;font-weight:700;color:#fff;margin:0 0 0.15rem;
+    }
+    .card-room{font-size:0.82rem;color:var(--muted);margin:0 0 0.85rem}
+
+    .meeting-id-block{
+      background:var(--surface-2);
+      border-radius:var(--radius-sm);
+      padding:0.6rem 0.75rem;
+      margin-bottom:0.6rem;
+      display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
+    }
+    .meeting-id-label{
+      font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;
+      margin-bottom:0.15rem;
+    }
+    .meeting-id{
+      font-family:'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+      font-size:1rem;color:var(--text);font-weight:500;letter-spacing:0.02em;
+    }
+    .copy-btn{
+      background:transparent;border:0;color:var(--muted);cursor:pointer;
+      padding:0.3rem;border-radius:5px;display:flex;align-items:center;
+      transition:color .12s, background .12s;
+    }
+    .copy-btn:hover{color:var(--accent);background:var(--accent-soft)}
+
+    .naming-protocol{
+      background:rgba(251,191,36,0.06);
+      border:1px solid rgba(251,191,36,0.18);
+      border-radius:var(--radius-sm);
+      padding:0.45rem 0.65rem;
+      margin-bottom:0.85rem;
+      font-size:0.78rem;
+    }
+    .naming-protocol strong{color:var(--gold);font-weight:600;margin-right:0.3rem}
+
+    .join-btn{
+      width:100%;
+      background:var(--accent);
+      color:#fff;
+      border:0;
+      padding:0.6rem;
+      border-radius:var(--radius-sm);
+      font-size:0.85rem;font-weight:500;
+      cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;
       text-decoration:none;
-      display:block;
-      padding:0.15rem 0.2rem;
-      border-radius:6px;
+      transition:background .12s;
+      font-family:inherit;
     }
-    li a:hover{ color:var(--accent-600); text-decoration:underline; }
+    .join-btn:hover{background:var(--accent-hover)}
 
-    .muted{ color:var(--muted); font-size:0.92rem; }
+    /* Table */
+    .table-wrap{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      overflow:hidden;
+    }
+    table{width:100%;border-collapse:collapse}
+    thead th{
+      text-align:left;
+      padding:0.75rem 1rem;
+      font-size:0.7rem;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      font-weight:600;
+      border-bottom:1px solid var(--border);
+      background:var(--surface-2);
+    }
+    tbody td{
+      padding:0.85rem 1rem;
+      border-bottom:1px solid var(--border);
+      vertical-align:middle;
+      font-size:0.88rem;
+    }
+    tbody tr:last-child td{border-bottom:0}
+    tbody tr{transition:background .1s}
+    tbody tr:hover{background:var(--surface-hover)}
 
-    a:focus{
-      outline:3px solid var(--focus);
-      outline-offset:3px;
-      border-radius:6px;
+    .row-pin{
+      background:transparent;border:0;cursor:pointer;color:var(--muted);
+      padding:0.2rem;border-radius:4px;display:inline-flex;
+    }
+    .row-pin.pinned{color:var(--gold)}
+    .row-pin.pinned svg{fill:var(--gold)}
+
+    .row-city{font-weight:600;color:var(--text);font-size:0.9rem}
+    .row-court-type{font-size:0.72rem;color:var(--muted);margin-top:0.1rem}
+
+    .id-pass{font-family:'SF Mono', Monaco, monospace;font-size:0.8rem}
+    .id-pass .id{color:var(--text)}
+    .id-pass .pass{color:var(--muted);margin-top:0.15rem}
+    .id-pass .label{color:var(--muted);margin-right:0.3rem;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.05em;font-family:inherit}
+
+    .name-tag{
+      display:inline-block;
+      padding:0.25rem 0.6rem;
+      background:rgba(251,191,36,0.08);
+      color:#fcd34d;
+      border:1px solid rgba(251,191,36,0.18);
+      border-radius:5px;
+      font-size:0.72rem;font-weight:500;
     }
 
-    .no-results{ grid-column:1/-1; color:var(--muted); text-align:center; padding:1rem; }
+    .row-join{
+      background:var(--accent);color:#fff;border:0;
+      padding:0.4rem 0.75rem;border-radius:6px;
+      font-size:0.78rem;font-weight:500;cursor:pointer;
+      display:inline-flex;align-items:center;gap:0.3rem;
+      text-decoration:none;
+      transition:background .12s;
+    }
+    .row-join:hover{background:var(--accent-hover)}
 
-    @media (max-width:560px){
-      .search input{ width:120px; }
-      h1{ font-size:1.05rem; }
-      body{ padding:1rem; }
+    .table-footer{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0.75rem 1rem;
+      background:var(--surface-2);
+      border-top:1px solid var(--border);
+      font-size:0.78rem;color:var(--muted);
+    }
+
+    /* Footer */
+    footer{
+      padding:1.5rem 0 2rem;
+      border-top:1px solid var(--border);
+      margin-top:2.5rem;
+      color:var(--muted);font-size:0.78rem;
+    }
+    .footer-inner{
+      max-width:var(--max-width);margin:0 auto;padding:0 1.5rem;
+      display:flex;justify-content:space-between;align-items:center;
+      flex-wrap:wrap;gap:0.5rem;
+    }
+    footer .links{display:flex;gap:1.25rem}
+    footer a{color:var(--muted);text-decoration:none}
+    footer a:hover{color:var(--text)}
+
+    /* Modal */
+    .modal-overlay{
+      position:fixed;inset:0;background:rgba(5,10,20,0.7);backdrop-filter:blur(4px);
+      display:none;align-items:center;justify-content:center;z-index:200;padding:1rem;
+    }
+    .modal-overlay.open{display:flex}
+    .modal{
+      background:var(--surface);border:1px solid var(--border-strong);
+      border-radius:var(--radius);padding:1.5rem;
+      max-width:480px;width:100%;
+      box-shadow:0 24px 48px rgba(0,0,0,0.4);
+    }
+    .modal h3{margin:0 0 0.4rem;font-size:1.1rem;color:#fff}
+    .modal p{margin:0 0 1rem;font-size:0.85rem;color:var(--text-secondary)}
+    .modal-input{
+      width:100%;padding:0.65rem 0.85rem;
+      background:var(--surface-2);border:1px solid var(--border);
+      border-radius:var(--radius-sm);color:var(--text);font-size:0.9rem;
+      font-family:inherit;outline:none;margin-bottom:1rem;
+    }
+    .modal-input:focus{border-color:var(--accent)}
+    .modal-actions{display:flex;justify-content:flex-end;gap:0.5rem}
+
+    /* Toast */
+    .toast{
+      position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);
+      background:var(--surface);border:1px solid var(--border-strong);
+      padding:0.6rem 1rem;border-radius:var(--radius-sm);
+      font-size:0.85rem;color:var(--text);
+      box-shadow:0 12px 30px rgba(0,0,0,0.4);
+      opacity:0;transition:all .25s ease;pointer-events:none;z-index:300;
+      display:inline-flex;align-items:center;gap:0.5rem;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .toast svg{color:var(--success)}
+
+    .empty-state{
+      grid-column:1/-1;
+      padding:1.5rem;text-align:center;color:var(--muted);
+      background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius);
+      font-size:0.85rem;
+    }
+
+    @media (max-width:768px){
+      .container{padding:0 1rem}
+      .topbar-inner{padding:0 1rem}
+      .footer-inner{padding:0 1rem}
+      .user-text{display:none}
+      .page-header{padding:1.25rem 0 1rem}
+      h1{font-size:1.5rem}
+      .search-bar{flex-direction:column}
+      .filter-select{min-width:0;width:100%}
+      thead th:nth-child(3),tbody td:nth-child(3),
+      thead th:nth-child(5),tbody td:nth-child(5){display:none}
     }
   </style>
 </head>
-
 <body>
-  <a class="skip-link" href="#grid">Skip to content</a>
 
-  <main class="wrap" role="main">
-    <header>
-      <div>
-        <h1>All Court Zoom Links</h1>
-        <div class="subtitle"><a href="index.html" class="back-link">&larr; Back to Start Page</a></div>
-      </div>
-
-      <div class="controls">
-        <div class="search" role="search" aria-label="Filter links">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-            <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.5"></circle>
-          </svg>
-          <label for="filter" class="sr-only">Search links</label>
-          <input id="filter" type="search" placeholder="Search links (press /)" aria-label="Search links" aria-describedby="searchHelp searchStatus">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="index.html" class="back-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Dashboard
+        </a>
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 9v3M9 14v3M15 9v3M15 14v3"/></svg>
+          </div>
+          Court Zoom Directory
         </div>
       </div>
-    </header>
-
-    <nav aria-label="Court Zoom links">
-      <div class="grid-container" id="grid">
-
-        <article class="category" aria-labelledby="perth-title">
-          <h2 id="perth-title">Perth</h2>
-          <ul>
-            <li><a href="zoommtg://zoom.us/join?confno=69876168540&pwd=343847&uname=CSL02%20MacDonald%2C%20Mark" target="_blank" rel="noopener noreferrer">Perth CMC</a></li>
-            <li><a href="zoommtg://zoom.us/join?confno=63868731509&pwd=&uname=CSL02%20MacDonald%2C%20Mark" target="_blank" rel="noopener noreferrer">Perth Plea/JLICMC/Set Date</a></li>
-            <li><a href="zoommtg://zoom.us/join?confno=67083368785&pwd=&uname=MacDonald%2C%20Mark%20P%20Csl02" target="_blank" rel="noopener noreferrer">Perth JPT</a></li>
-            <li><a href="zoommtg://zoom.us/join?confno=63398638097&pwd=&uname=MacDonald%2C%20Mark%20P%20Csl02" target="_blank" rel="noopener noreferrer">Perth Set Date</a></li>
-            <li><a href="zoommtg://zoom.us/join?confno=6377654797&pwd=&uname=CSL02%20MacDonald%2C%20Mark" target="_blank" rel="noopener noreferrer">Perth POA</a></li>
-          </ul>
-        </article>
-
-        <article class="category" aria-labelledby="brockville-title">
-          <h2 id="brockville-title">Brockville</h2>
-          <ul>
-            <li><a href="zoommtg://zoom.us/join?confno=65541926591&pwd=957534&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville CMC Bails</a></li>
-            <li><a href="zoommtg://zoom.us/join?confno=62792499193&pwd=103482&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville Plea</a></li>
-            <li><a href="zoommtg://zoom.us/join?confno=65442004362&pwd=194440&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville JLICMC</a></li>
-            <li><a href="zoommtg://zoom.us/join?confno=63211821672&pwd=045789&uname=MacDonald%2C%20Mark%20Counsel" target="_blank" rel="noopener noreferrer">Brockville Trial Setting</a></li>
-            <li><a href="zoommtg://zoom.us/join?confno=8238226801&pwd=&uname=Csl'02%20MacDonald%2C%20Mark%20P" target="_blank" rel="noopener noreferrer">Brockville POA</a></li>
-          </ul>
-        </article>
-
-        <article class="category" aria-labelledby="ottawa-title">
-          <h2 id="ottawa-title">Ottawa</h2>
-          <ul>
-            <li><a href="zoommtg://zoom.us/join?confno=64812203132&pwd=606263&uname=MacDonald%20Law%20Office%20Csl02" target="_blank" rel="noopener noreferrer">Ottawa CMC Adult Prov T-F</a></li>
-            <li><a href="zoommtg://zoom.us/join?confno=64628108539&pwd=514752&uname=MacDonald%20Law%20Office%20Csl02" target="_blank" rel="noopener noreferrer">Ottawa CMC Adult Fed T</a></li>
-          </ul>
-        </article>
-
-        <article class="category" aria-labelledby="kingston-title">
-          <h2 id="kingston-title">Kingston</h2>
-          <ul>
-            <li><a href="zoommtg://zoom.us/join?confno=68465588521&pwd=531108&uname=MacDonald%2C%20M%20Csl02" target="_blank" rel="noopener noreferrer">Kingston CMC</a></li>
-          </ul>
-        </article>
-
-        <div class="no-results" id="noResults" hidden>No links match your search.</div>
+      <div class="topbar-right">
+        <div class="status-pill">System Online</div>
+        <div class="user-info">
+          <div class="user-text">
+            <div class="user-name">Mark MacDonald</div>
+            <div class="user-role">Senior Counsel</div>
+          </div>
+          <div class="user-avatar">MM</div>
+        </div>
       </div>
-    </nav>
+    </div>
+  </header>
 
-    <div id="searchHelp" class="muted" style="margin-top:0.6rem;">Tip: press <kbd>/</kbd> to focus search. Matching checks link text and URL.</div>
-    <div id="searchStatus" role="status" aria-live="polite" class="muted" style="margin-top:0.25rem;display:none;"></div>
-  </main>
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h1>Virtual Courtrooms</h1>
+        <p class="page-desc">Access virtual courtrooms, copy meeting IDs, and review naming protocols. Ensure your display name follows the <a class="name-format-link" id="changeNameTrigger">CSL02 MacDonald, Mark</a> format.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn" id="changeNameBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Change Name
+        </button>
+        <button class="btn" id="exportBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export List
+        </button>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <div class="search-input">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="searchInput" placeholder="Search by city, court name, or purpose...">
+      </div>
+      <select class="filter-select" id="cityFilter">
+        <option value="">All Cities</option>
+      </select>
+      <select class="filter-select" id="typeFilter">
+        <option value="">All Court Types</option>
+      </select>
+    </div>
+
+    <!-- Pinned -->
+    <section class="section" id="pinnedSection">
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Pinned Courts
+      </h2>
+      <div class="pinned-grid" id="pinnedGrid"></div>
+    </section>
+
+    <!-- Recent -->
+    <section class="section" id="recentSection" hidden>
+      <h2 class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Recently Used
+      </h2>
+      <div class="pinned-grid" id="recentGrid"></div>
+    </section>
+
+    <!-- All Locations -->
+    <section class="section">
+      <h2 class="section-title">
+        All Locations
+        <span style="font-size:0.78rem;color:var(--muted);font-weight:400;margin-left:0.4rem;" id="countLabel"></span>
+      </h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40px"></th>
+              <th>Court Location</th>
+              <th>Room / Purpose</th>
+              <th>Meeting ID &amp; Passcode</th>
+              <th>Naming Format</th>
+              <th style="text-align:right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="table-footer">
+          <span id="showingLabel">Showing 0 courts</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 MacDonald Law Office. All rights reserved.</span>
+      <div class="links">
+        <a href="index.html">Start Page</a>
+        <a href="#" id="resetData">Reset Pinned/Recent</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Change Name modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <h3>Display Name</h3>
+      <p>This name is inserted into your Zoom URLs. Each court may require a specific format — see the "Naming Format" badge per court.</p>
+      <input type="text" id="nameInput" class="modal-input" placeholder="e.g. CSL02 MacDonald, Mark">
+      <div class="modal-actions">
+        <button class="btn" id="modalCancel">Cancel</button>
+        <button class="btn btn-primary" id="modalSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Copied</span>
+  </div>
 
   <script>
-    document.querySelectorAll('a[target="_blank"]').forEach(a => {
-      if (!a.rel.includes('noopener')) a.rel = (a.rel + ' noopener noreferrer').trim();
+    // ----- Court data -----
+    const COURTS = [
+      // Perth
+      { id:'perth-cmc',          city:'Perth',      type:'OCJ',     room:'Case Management Court',      meetingId:'69876168540', passcode:'343847', defaultName:'CSL02 MacDonald, Mark' },
+      { id:'perth-plea',         city:'Perth',      type:'OCJ',     room:'Plea / JLICMC / Set Date',   meetingId:'63868731509', passcode:'',       defaultName:'CSL02 MacDonald, Mark' },
+      { id:'perth-jpt',          city:'Perth',      type:'OCJ',     room:'Judicial Pre-Trial',         meetingId:'67083368785', passcode:'',       defaultName:'MacDonald, Mark P Csl02' },
+      { id:'perth-setdate',      city:'Perth',      type:'OCJ',     room:'Set Date',                   meetingId:'63398638097', passcode:'',       defaultName:'MacDonald, Mark P Csl02' },
+      { id:'perth-poa',          city:'Perth',      type:'POA',     room:'Provincial Offences Court',  meetingId:'6377654797',  passcode:'',       defaultName:'CSL02 MacDonald, Mark' },
+      // Brockville
+      { id:'brock-cmc',          city:'Brockville', type:'OCJ',     room:'CMC / Bails',                meetingId:'65541926591', passcode:'957534', defaultName:"Csl'02 MacDonald, Mark P" },
+      { id:'brock-plea',         city:'Brockville', type:'OCJ',     room:'Plea',                       meetingId:'62792499193', passcode:'103482', defaultName:"Csl'02 MacDonald, Mark P" },
+      { id:'brock-jlicmc',       city:'Brockville', type:'OCJ',     room:'JLICMC',                     meetingId:'65442004362', passcode:'194440', defaultName:"Csl'02 MacDonald, Mark P" },
+      { id:'brock-trial',        city:'Brockville', type:'OCJ',     room:'Trial Setting',              meetingId:'63211821672', passcode:'045789', defaultName:'MacDonald, Mark Counsel' },
+      { id:'brock-poa',          city:'Brockville', type:'POA',     room:'Provincial Offences Court',  meetingId:'8238226801',  passcode:'',       defaultName:"Csl'02 MacDonald, Mark P" },
+      // Ottawa
+      { id:'ottawa-cmc-prov',    city:'Ottawa',     type:'OCJ',     room:'CMC Adult Provincial (T-F)', meetingId:'64812203132', passcode:'606263', defaultName:'MacDonald Law Office Csl02' },
+      { id:'ottawa-cmc-fed',     city:'Ottawa',     type:'OCJ',     room:'CMC Adult Federal (T)',      meetingId:'64628108539', passcode:'514752', defaultName:'MacDonald Law Office Csl02' },
+      // Kingston
+      { id:'kingston-cmc',       city:'Kingston',   type:'OCJ',     room:'Case Management Court',      meetingId:'68465588521', passcode:'531108', defaultName:'MacDonald, M Csl02' },
+    ];
+
+    // ----- State (localStorage) -----
+    const LS = { name:'czd_displayName', pinned:'czd_pinned', recent:'czd_recent' };
+    const state = {
+      displayName: localStorage.getItem(LS.name) || 'CSL02 MacDonald, Mark',
+      pinned: new Set(JSON.parse(localStorage.getItem(LS.pinned) || '[]')),
+      recent: JSON.parse(localStorage.getItem(LS.recent) || '[]'),
+    };
+    function saveState(){
+      localStorage.setItem(LS.name, state.displayName);
+      localStorage.setItem(LS.pinned, JSON.stringify([...state.pinned]));
+      localStorage.setItem(LS.recent, JSON.stringify(state.recent));
+    }
+
+    // ----- Helpers -----
+    function formatId(id){
+      const s = String(id);
+      if (s.length === 11) return s.slice(0,3)+' '+s.slice(3,7)+' '+s.slice(7);
+      if (s.length === 10) return s.slice(0,3)+' '+s.slice(3,6)+' '+s.slice(6);
+      return s;
+    }
+    function buildZoomUrl(c){
+      const params = new URLSearchParams();
+      params.set('confno', c.meetingId);
+      params.set('pwd', c.passcode || '');
+      params.set('uname', state.displayName);
+      return 'zoommtg://zoom.us/join?' + params.toString();
+    }
+    function pin(id){
+      if (state.pinned.has(id)) state.pinned.delete(id);
+      else state.pinned.add(id);
+      saveState();
+      render();
+    }
+    function trackJoin(id){
+      const now = Date.now();
+      state.recent = state.recent.filter(r => r.id !== id);
+      state.recent.unshift({ id, ts: now });
+      state.recent = state.recent.slice(0, 5);
+      saveState();
+      render();
+    }
+    function copy(text, msg='Copied'){
+      navigator.clipboard.writeText(text).then(()=>showToast(msg));
+    }
+
+    // ----- Toast -----
+    let toastTimer;
+    function showToast(msg){
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>t.classList.remove('show'), 1800);
+    }
+
+    // ----- Render -----
+    function badgeClass(t){
+      if (t === 'POA') return 'badge poa';
+      if (t === 'SCJ') return 'badge scj';
+      if (t === 'Family') return 'badge family';
+      return 'badge';
+    }
+
+    function cardHtml(c){
+      const pinned = state.pinned.has(c.id);
+      const passLine = c.passcode
+        ? `<div class="meeting-id-label">Meeting ID &middot; Pass ${c.passcode}</div>`
+        : `<div class="meeting-id-label">Meeting ID &middot; No passcode</div>`;
+      return `
+        <article class="court-card">
+          <div class="card-top">
+            <span class="${badgeClass(c.type)}">${c.type}</span>
+            <button class="star-btn ${pinned?'pinned':''}" data-action="pin" data-id="${c.id}" title="${pinned?'Unpin':'Pin'}" aria-label="Pin court">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="${pinned?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </button>
+          </div>
+          <h3 class="card-city">${c.city}</h3>
+          <div class="card-room">${c.room}</div>
+          <div class="meeting-id-block">
+            <div>
+              ${passLine}
+              <div class="meeting-id">${formatId(c.meetingId)}</div>
+            </div>
+            <button class="copy-btn" data-action="copy-id" data-id="${c.id}" title="Copy meeting ID" aria-label="Copy meeting ID">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+          <div class="naming-protocol"><strong>Naming Protocol:</strong>${c.defaultName}</div>
+          <a class="join-btn" href="${buildZoomUrl(c)}" data-action="join" data-id="${c.id}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            Join Meeting
+          </a>
+        </article>
+      `;
+    }
+
+    function rowHtml(c){
+      const pinned = state.pinned.has(c.id);
+      const fullType = c.type === 'OCJ' ? 'Ontario Court of Justice'
+        : c.type === 'SCJ' ? 'Superior Court of Justice'
+        : c.type === 'POA' ? 'Provincial Offences Court'
+        : c.type === 'Family' ? 'Family Court' : c.type;
+      return `
+        <tr data-id="${c.id}">
+          <td>
+            <button class="row-pin ${pinned?'pinned':''}" data-action="pin" data-id="${c.id}" aria-label="Pin court">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="${pinned?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </button>
+          </td>
+          <td>
+            <div class="row-city">${c.city}</div>
+            <div class="row-court-type">${fullType}</div>
+          </td>
+          <td>${c.room}</td>
+          <td>
+            <div class="id-pass">
+              <div><span class="label">ID</span><span class="id">${formatId(c.meetingId)}</span></div>
+              <div class="pass"><span class="label">Pass</span>${c.passcode || 'No Passcode'}</div>
+            </div>
+          </td>
+          <td><span class="name-tag">${c.defaultName}</span></td>
+          <td style="text-align:right">
+            <a class="row-join" href="${buildZoomUrl(c)}" data-action="join" data-id="${c.id}">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              Join
+            </a>
+          </td>
+        </tr>
+      `;
+    }
+
+    function getFiltered(){
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const city = document.getElementById('cityFilter').value;
+      const type = document.getElementById('typeFilter').value;
+      return COURTS.filter(c => {
+        if (city && c.city !== city) return false;
+        if (type && c.type !== type) return false;
+        if (!q) return true;
+        return (c.city + ' ' + c.room + ' ' + c.type + ' ' + c.defaultName).toLowerCase().includes(q);
+      });
+    }
+
+    function render(){
+      document.getElementById('changeNameTrigger').textContent = state.displayName;
+
+      const pinnedCourts = COURTS.filter(c => state.pinned.has(c.id));
+      const pinnedGrid = document.getElementById('pinnedGrid');
+      if (pinnedCourts.length === 0){
+        pinnedGrid.innerHTML = `<div class="empty-state">No pinned courts yet. Click the star on any court to pin it here.</div>`;
+      } else {
+        pinnedGrid.innerHTML = pinnedCourts.map(cardHtml).join('');
+      }
+
+      const recentCourts = state.recent
+        .map(r => COURTS.find(c => c.id === r.id))
+        .filter(Boolean)
+        .filter(c => !state.pinned.has(c.id))
+        .slice(0, 4);
+      const recentSection = document.getElementById('recentSection');
+      if (recentCourts.length === 0){
+        recentSection.hidden = true;
+      } else {
+        recentSection.hidden = false;
+        document.getElementById('recentGrid').innerHTML = recentCourts.map(cardHtml).join('');
+      }
+
+      const filtered = getFiltered();
+      document.getElementById('tableBody').innerHTML = filtered.length
+        ? filtered.map(rowHtml).join('')
+        : `<tr><td colspan="6" style="padding:1.5rem;text-align:center;color:var(--muted)">No courts match your filters.</td></tr>`;
+
+      document.getElementById('showingLabel').textContent =
+        `Showing ${filtered.length} of ${COURTS.length} courts`;
+      document.getElementById('countLabel').textContent =
+        `(${COURTS.length} total)`;
+    }
+
+    function initFilters(){
+      const cities = [...new Set(COURTS.map(c => c.city))].sort();
+      const types = [...new Set(COURTS.map(c => c.type))].sort();
+      const cityF = document.getElementById('cityFilter');
+      const typeF = document.getElementById('typeFilter');
+      cities.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; cityF.appendChild(o); });
+      types.forEach(t  => { const o = document.createElement('option'); o.value = t; o.textContent = t; typeF.appendChild(o); });
+    }
+
+    function onClick(e){
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      const court = COURTS.find(c => c.id === id);
+      if (!court) return;
+
+      if (action === 'pin'){ pin(id); }
+      else if (action === 'copy-id'){
+        copy(court.meetingId, `Copied ID for ${court.city} – ${court.room}`);
+      }
+      else if (action === 'join'){
+        trackJoin(id);
+      }
+    }
+
+    function openModal(){
+      document.getElementById('nameInput').value = state.displayName;
+      document.getElementById('modal').classList.add('open');
+      setTimeout(()=>document.getElementById('nameInput').focus(), 50);
+    }
+    function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+
+    function exportList(){
+      const lines = ['City\tType\tRoom\tMeeting ID\tPasscode\tNaming Format'];
+      COURTS.forEach(c => {
+        lines.push([c.city, c.type, c.room, formatId(c.meetingId), c.passcode || '-', c.defaultName].join('\t'));
+      });
+      const blob = new Blob([lines.join('\n')], { type:'text/tab-separated-values' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'court-zoom-directory.tsv'; a.click();
+      URL.revokeObjectURL(url);
+      showToast('Export downloaded');
+    }
+
+    document.addEventListener('click', onClick);
+    document.getElementById('searchInput').addEventListener('input', render);
+    document.getElementById('cityFilter').addEventListener('change', render);
+    document.getElementById('typeFilter').addEventListener('change', render);
+    document.getElementById('changeNameBtn').addEventListener('click', openModal);
+    document.getElementById('changeNameTrigger').addEventListener('click', e => { e.preventDefault(); openModal(); });
+    document.getElementById('modalCancel').addEventListener('click', closeModal);
+    document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+    document.getElementById('modalSave').addEventListener('click', () => {
+      const v = document.getElementById('nameInput').value.trim();
+      if (v){ state.displayName = v; saveState(); render(); showToast('Display name updated'); }
+      closeModal();
+    });
+    document.getElementById('exportBtn').addEventListener('click', exportList);
+    document.getElementById('resetData').addEventListener('click', e => {
+      e.preventDefault();
+      if (confirm('Reset pinned and recent courts? Your display name will be kept.')){
+        state.pinned = new Set(); state.recent = []; saveState(); render();
+      }
     });
 
-    (function(){
-      const input = document.getElementById('filter');
-      if (!input) return;
-      const cards = Array.from(document.querySelectorAll('.category'));
-      const noResults = document.getElementById('noResults');
-      const status = document.getElementById('searchStatus');
-
-      function debounce(fn, wait=150){
-        let t;
-        return (...args)=>{ clearTimeout(t); t = setTimeout(()=>fn(...args), wait); };
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT'){
+        e.preventDefault(); document.getElementById('searchInput').focus();
       }
+    });
 
-      function normalize(s){ return String(s||'').trim().toLowerCase(); }
-
-      function filter(){
-        const q = normalize(input.value);
-        let visibleLinkCount = 0;
-        cards.forEach(card => {
-          const lis = Array.from(card.querySelectorAll('li'));
-          let cardHasMatch = false;
-          lis.forEach(li => {
-            const a = li.querySelector('a');
-            const text = normalize(a && a.textContent);
-            const href = normalize(a && a.href);
-            const match = q === '' || text.includes(q) || href.includes(q);
-            li.style.display = match ? '' : 'none';
-            if (match) { cardHasMatch = true; visibleLinkCount++; }
-          });
-          card.style.display = cardHasMatch ? '' : 'none';
-        });
-
-        if (visibleLinkCount === 0 && q !== '') {
-          noResults.hidden = false;
-        } else {
-          noResults.hidden = true;
-        }
-
-        if (q === '') {
-          status.style.display = 'none';
-          status.textContent = '';
-        } else {
-          status.style.display = '';
-          status.textContent = visibleLinkCount === 0 ? 'No links match your search.' : visibleLinkCount + (visibleLinkCount === 1 ? ' link shown.' : ' links shown.');
-        }
-      }
-
-      filter();
-
-      input.addEventListener('input', debounce(filter, 150));
-
-      document.addEventListener('keydown', (e) => {
-        const tag = document.activeElement && document.activeElement.tagName;
-        if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA' && !e.ctrlKey && !e.metaKey && !e.altKey) {
-          e.preventDefault();
-          input.focus();
-          const val = input.value;
-          input.value = '';
-          input.value = val;
-        }
-        if (e.key === 'Escape' && (document.activeElement === input)) {
-          input.value = '';
-          filter();
-          input.blur();
-        }
-      });
-
-    })();
+    initFilters();
+    render();
   </script>
 </body>
 </html>
