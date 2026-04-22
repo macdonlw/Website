@@ -129,6 +129,41 @@
       display:inline-flex;align-items:center;gap:0.4rem;
     }
 
+    /* Docket Pocket hero CTA */
+    .hero-cta-wrap{
+      text-align:center;
+      padding:0.5rem 0.5rem 1.75rem;
+    }
+    .hero-cta{
+      display:inline-flex;align-items:center;gap:0.65rem;
+      padding:1rem 2rem;
+      background:linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+      color:#fff;
+      border:0;border-radius:14px;
+      font-size:1.1rem;font-weight:700;letter-spacing:-0.01em;
+      text-decoration:none;font-family:inherit;
+      box-shadow:0 8px 28px rgba(99,102,241,0.35), 0 0 0 1px rgba(255,255,255,0.05) inset;
+      transition:transform .15s ease, box-shadow .15s ease;
+      position:relative;overflow:hidden;
+    }
+    .hero-cta::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+      pointer-events:none;
+    }
+    .hero-cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 36px rgba(99,102,241,0.5), 0 0 0 1px rgba(255,255,255,0.08) inset;
+    }
+    .hero-cta svg{flex-shrink:0}
+    .hero-cta-sub{
+      display:block;margin-top:0.6rem;
+      font-size:0.78rem;color:var(--muted);letter-spacing:0.04em;
+    }
+    @media (max-width:560px){
+      .hero-cta{font-size:0.95rem;padding:0.85rem 1.4rem}
+    }
+
     /* Search (subtle, only shown when user presses /) */
     .search-wrap{
       padding:0 0.5rem;margin-bottom:1.25rem;display:none;
@@ -348,6 +383,17 @@
         <p class="system-status">System Status: Online &amp; Secure</p>
       </div>
 
+      <!-- Docket Pocket — primary CTA -->
+      <div class="hero-cta-wrap">
+        <a class="hero-cta" href="https://docket-pocket-mdl.azurewebsites.net/" target="_blank" rel="noopener noreferrer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          Docket Pocket Practice Management
+          <span style="opacity:0.85;font-weight:600">(Start Here!)</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <span class="hero-cta-sub">docket-pocket-mdl.azurewebsites.net</span>
+      </div>
+
       <!-- Search (toggled via /) -->
       <div class="search-wrap" id="searchWrap">
         <div class="search">
@@ -483,7 +529,7 @@
           <div class="card-footer">PORTALS</div>
         </article>
 
-        <article class="card" data-search="projects case management hosted website life kit">
+        <article class="card" data-search="projects case management docket pocket website life kit">
           <div class="card-header">
             <div class="card-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
@@ -491,8 +537,7 @@
             <h3 class="card-title">Projects</h3>
           </div>
           <ul>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="http://192.168.68.81" target="_blank" rel="noopener noreferrer">Case Mgmt Tool (Local)</a></li>
-            <li class="no-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><span>Case Mgmt Tool (Hosted)</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://docket-pocket-mdl.azurewebsites.net/" target="_blank" rel="noopener noreferrer">Docket Pocket (Case Mgmt)</a></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://macdonaldlaw.ca/" target="_blank" rel="noopener noreferrer">MacDonaldLaw.ca</a></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://macdonlw.github.io/Website/" target="_blank" rel="noopener noreferrer">Start Page</a></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://homespace-mdl.azurewebsites.net" target="_blank" rel="noopener noreferrer">Mark's Life Kit</a></li>
