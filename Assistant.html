@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Assistant Start Page</title>
+  <meta name="description" content="Assistant's quick links start page — dashboard.">
+  <meta name="theme-color" content="#0a1220">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root{
+      --bg: #0a1220;
+      --bg-pattern: rgba(255,255,255,0.04);
+      --surface: #131c2e;
+      --surface-2: #1a2438;
+      --surface-hover: #1f2a40;
+      --border: rgba(255,255,255,0.06);
+      --border-strong: rgba(255,255,255,0.1);
+      --text: #e6ecf5;
+      --text-secondary: #b0bdcf;
+      --muted: #6c7a91;
+      --muted-2: #4a566c;
+      --accent: #3b82f6;
+      --accent-hover: #5294f6;
+      --accent-soft: rgba(59,130,246,0.12);
+      --green: #10b981;
+      --green-soft: rgba(16,185,129,0.12);
+      --gold: #fbbf24;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --max-width: 1180px;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html{height:100%}
+    body{
+      margin:0;
+      min-height:100%;
+      font-family:'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:var(--bg);
+      background-image:
+        radial-gradient(circle at 1px 1px, var(--bg-pattern) 1px, transparent 0);
+      background-size: 18px 18px;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    /* Outer frame: dotted border like the screenshot */
+    .frame{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:1.5rem;
+      position:relative;
+    }
+    .frame::before, .frame::after{
+      content:'';
+      position:absolute;
+      top:0;bottom:0;
+      width:1px;
+      background-image:radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1.5px);
+      background-size:1px 18px;
+      background-repeat:repeat-y;
+    }
+    .frame::before{left:6px}
+    .frame::after{right:6px}
+
+    .panel{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1.25rem 1.5rem;
+      box-shadow:0 12px 40px rgba(0,0,0,0.25);
+    }
+
+    /* Top bar */
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0.75rem 0.5rem 1.25rem;
+      gap:1rem;
+      border-bottom:1px solid var(--border);
+      margin-bottom:1.5rem;
+    }
+    .brand{
+      font-size:1rem;font-weight:700;color:var(--text);letter-spacing:-0.01em;
+    }
+    .topnav{
+      display:flex;gap:1.75rem;
+      font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;
+    }
+    .topnav a{
+      color:var(--muted);text-decoration:none;
+      transition:color .12s;
+      padding:0.25rem 0;
+    }
+    .topnav a:hover{color:var(--text)}
+    .topbar-right{display:flex;align-items:center;gap:1rem}
+    .add-shortcut{
+      background:var(--accent);color:#fff;
+      border:0;padding:0.55rem 1rem;border-radius:8px;
+      font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;
+      cursor:pointer;font-family:inherit;
+      display:inline-flex;align-items:center;gap:0.4rem;
+      transition:background .12s;
+      text-decoration:none;
+    }
+    .add-shortcut:hover{background:var(--accent-hover)}
+    .avatar{
+      width:36px;height:36px;border-radius:50%;
+      background:linear-gradient(135deg, #10b981, #3b82f6);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:600;font-size:0.85rem;
+      border:2px solid var(--border-strong);
+    }
+
+    /* Greeting */
+    .greeting{
+      padding:0.5rem 0.5rem 1.5rem;
+    }
+    h1{
+      margin:0 0 0.4rem;
+      font-size:2rem;font-weight:700;letter-spacing:-0.02em;color:#fff;
+    }
+    .system-status{
+      color:var(--muted);font-size:0.85rem;margin:0;
+      display:inline-flex;align-items:center;gap:0.4rem;
+    }
+
+    /* Docket Pocket hero CTA */
+    .hero-cta-wrap{
+      text-align:center;
+      padding:0.5rem 0.5rem 1.75rem;
+    }
+    .hero-cta{
+      display:inline-flex;align-items:center;gap:0.65rem;
+      padding:1rem 2rem;
+      background:linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+      color:#fff;
+      border:0;border-radius:14px;
+      font-size:1.1rem;font-weight:700;letter-spacing:-0.01em;
+      text-decoration:none;font-family:inherit;
+      box-shadow:0 8px 28px rgba(99,102,241,0.35), 0 0 0 1px rgba(255,255,255,0.05) inset;
+      transition:transform .15s ease, box-shadow .15s ease;
+      position:relative;overflow:hidden;
+    }
+    .hero-cta::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+      pointer-events:none;
+    }
+    .hero-cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 36px rgba(99,102,241,0.5), 0 0 0 1px rgba(255,255,255,0.08) inset;
+    }
+    .hero-cta svg{flex-shrink:0}
+    .hero-cta-sub{
+      display:block;margin-top:0.6rem;
+      font-size:0.78rem;color:var(--muted);letter-spacing:0.04em;
+    }
+    @media (max-width:560px){
+      .hero-cta{font-size:0.95rem;padding:0.85rem 1.4rem}
+    }
+
+    /* Search (subtle, only shown when user presses /) */
+    .search-wrap{
+      padding:0 0.5rem;margin-bottom:1.25rem;display:none;
+    }
+    .search-wrap.open{display:block}
+    .search{
+      background:var(--surface-2);
+      border:1px solid var(--border);
+      padding:0.5rem 0.75rem;
+      border-radius:10px;
+      display:flex;align-items:center;gap:0.5rem;
+    }
+    .search input{
+      flex:1;background:transparent;border:0;color:var(--text);outline:none;
+      font-size:0.9rem;font-family:inherit;
+    }
+    .search input::placeholder{color:var(--muted)}
+    .search svg{color:var(--muted)}
+
+    /* Smaller category grid */
+    .cards-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+      gap:1rem;
+      margin-bottom:1.25rem;
+    }
+    .card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:1rem 1.1rem;
+      display:flex;flex-direction:column;
+      transition:border-color .15s;
+    }
+    .card:hover{border-color:var(--border-strong)}
+
+    .card-header{
+      display:flex;align-items:center;gap:0.5rem;
+      margin-bottom:0.85rem;
+    }
+    .card-icon{
+      width:22px;height:22px;
+      display:flex;align-items:center;justify-content:center;
+      color:var(--accent);
+      flex-shrink:0;
+    }
+    .card-title{
+      font-size:0.92rem;font-weight:700;color:#fff;margin:0;
+    }
+
+    .card ul{
+      list-style:none;padding:0;margin:0 0 0.85rem;
+      display:flex;flex-direction:column;gap:0.5rem;
+      flex:1;
+    }
+    .card li{
+      display:flex;align-items:center;gap:0.5rem;
+      font-size:0.85rem;
+    }
+    .card li svg{
+      color:var(--muted);
+      width:13px;height:13px;flex-shrink:0;
+    }
+    .card li a{
+      color:var(--text-secondary);
+      text-decoration:none;
+      transition:color .12s;
+      flex:1;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    }
+    .card li a:hover{color:var(--text)}
+    .card li.no-link{color:var(--muted);font-style:italic}
+
+    .card-footer{
+      font-size:0.65rem;letter-spacing:0.08em;color:var(--muted-2);
+      text-transform:uppercase;font-weight:500;
+      margin-top:auto;
+      padding-top:0.5rem;
+      border-top:1px solid var(--border);
+    }
+
+    /* Footer */
+    footer{
+      padding:1.25rem 0.5rem 0;
+      border-top:1px solid var(--border);
+      margin-top:0.5rem;
+      display:flex;justify-content:space-between;align-items:center;
+      flex-wrap:wrap;gap:1rem;
+      font-size:0.78rem;color:var(--muted);
+    }
+    footer .links{display:flex;gap:1.5rem}
+    footer a{color:var(--muted);text-decoration:none;transition:color .12s}
+    footer a:hover{color:var(--text)}
+
+    /* Hidden link helper for search */
+    .card.hidden{display:none}
+    .card li.hidden{display:none}
+
+    .no-results{
+      grid-column:1/-1;
+      padding:2rem;text-align:center;color:var(--muted);
+      background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius);
+      font-size:0.9rem;
+    }
+
+    @media (max-width:768px){
+      .frame{padding:1rem}
+      .frame::before, .frame::after{display:none}
+      .topbar{flex-wrap:wrap;gap:0.75rem}
+      .topnav{display:none}
+      h1{font-size:1.5rem}
+      .cards-grid{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:480px){
+      .cards-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="frame">
+    <div class="panel">
+
+      <!-- Top bar -->
+      <header class="topbar">
+        <div class="brand">Assistant Start Page</div>
+        <nav class="topnav" aria-label="Quick navigation">
+          <a href="allcourt.html">Zoom</a>
+          <a href="https://outlook.cloud.microsoft/" target="_blank" rel="noopener noreferrer">Office</a>
+          <a href="https://outlook.cloud.microsoft/calendar/" target="_blank" rel="noopener noreferrer">Calendar</a>
+          <a href="https://macdlaw.sharepoint.com/sites/MDLW/Shared%20Documents/Forms/AllItems.aspx?startedResponseCatch=true" target="_blank" rel="noopener noreferrer">Documents</a>
+          <a href="https://outlook.cloud.microsoft/mail/" target="_blank" rel="noopener noreferrer">Mail</a>
+        </nav>
+        <div class="topbar-right">
+          <div class="avatar">A</div>
+        </div>
+      </header>
+
+      <!-- Greeting -->
+      <div class="greeting">
+        <h1 id="greeting">Hello</h1>
+        <p class="system-status">System Status: Online &amp; Secure</p>
+      </div>
+
+      <!-- Docket Pocket — primary CTA -->
+      <div class="hero-cta-wrap">
+        <a class="hero-cta" href="https://docket-pocket-mdl.azurewebsites.net/" target="_blank" rel="noopener noreferrer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          Docket Pocket Practice Management
+          <span style="opacity:0.85;font-weight:600">(Start Here!)</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <span class="hero-cta-sub">docket-pocket-mdl.azurewebsites.net</span>
+      </div>
+
+      <!-- Search (toggled via /) -->
+      <div class="search-wrap" id="searchWrap">
+        <div class="search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="search" id="searchInput" placeholder="Search links — press Esc to close" aria-label="Search links">
+        </div>
+      </div>
+
+      <!-- Category cards -->
+      <div class="cards-grid" id="cards">
+
+        <article class="card" data-search="real estate teraview lawyerdonedeal land transfer tax stewart title ontario sign-in treefort portaspass lawyerconnect llc">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3 class="card-title">Real Estate</h3>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.teraviewereg.ca/TvApp/Login.jsp?language=en" target="_blank" rel="noopener noreferrer">Teraview</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.lawyerdonedeal.com/loginldd.html" target="_blank" rel="noopener noreferrer">LDD Connect</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.teranetexpress.ca/csp/land-transfer-tax-info-login" target="_blank" rel="noopener noreferrer">s. 5 LTT (Teranet Express)</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://my.teranetconnect.ca/registration/tvDesktopLogin.form" target="_blank" rel="noopener noreferrer">MyTeranetConnect™</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://identity.stewart-intl.com/" target="_blank" rel="noopener noreferrer">Stewart Title</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.ontario.ca/page/personal-property-liens" target="_blank" rel="noopener noreferrer">Personal Property Lien</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://llc.firstcdn.com/Profile/Login.aspx?ApplicationType=LLC&" target="_blank" rel="noopener noreferrer">LLC</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://signin.ontario.ca/" target="_blank" rel="noopener noreferrer">Ontario Sign-in</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://auth.treeforttech.com/Account/Login" target="_blank" rel="noopener noreferrer">Treefort Login</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.portaspass.ca/portas/login" target="_blank" rel="noopener noreferrer">PortasPASS</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://lawyerconnect.fnf.ca/LawyerConnect/" target="_blank" rel="noopener noreferrer">LawyerConnect FNF</a></li>
+          </ul>
+          <div class="card-footer">REALESTATE</div>
+        </article>
+
+        <article class="card" data-search="email office outlook word onedrive docusign gmail dropbox sharepoint microsoft">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+            </div>
+            <h3 class="card-title">Email / Office</h3>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://outlook.cloud.microsoft/mail/" target="_blank" rel="noopener noreferrer">Microsoft Outlook</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://word.cloud.microsoft/" target="_blank" rel="noopener noreferrer">Microsoft Word</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://outlook.cloud.microsoft/" target="_blank" rel="noopener noreferrer">OneDrive</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://account.docusign.com/" target="_blank" rel="noopener noreferrer">DocuSign</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener noreferrer">Gmail</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.Dropbox.com" target="_blank" rel="noopener noreferrer">Dropbox</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://macdlaw.sharepoint.com/sites/MDLW" target="_blank" rel="noopener noreferrer">SharePoint Home</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://macdlaw.sharepoint.com/sites/MDLW/Shared%20Documents/Forms/AllItems.aspx?startedResponseCatch=true" target="_blank" rel="noopener noreferrer">SharePoint Drive</a></li>
+          </ul>
+          <div class="card-footer">OFFICE</div>
+        </article>
+
+        <article class="card" data-search="legal practice legal aid disclosure axon criminal notebook court cases">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 8h18M7 8l-3 6h6zM17 8l-3 6h6z"/></svg>
+            </div>
+            <h3 class="card-title">Legal Practice</h3>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.ontariocourtdates.ca/" target="_blank" rel="noopener noreferrer">Court Lists – Today</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.ontariocourtdates.ca/tomorrow/" target="_blank" rel="noopener noreferrer">Court Lists – Tomorrow</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://legalaidonline.on.ca/" target="_blank" rel="noopener noreferrer">Legal Aid Online</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.digitaldisclosure.mag.gov.on.ca/Home/Lang?culture=cultName" target="_blank" rel="noopener noreferrer">Digital (Prov) Disclosure Hub</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://ppsc-sppc.titanfile.com/notifications/" target="_blank" rel="noopener noreferrer">Federal Disclosure Hub</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://id.ca.evidence.com/login" target="_blank" rel="noopener noreferrer">Evidence.com – Axon</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.legalaid.on.ca/wp-content/uploads/LAO-tariff-and-billing-handbook-EN.pdf" target="_blank" rel="noopener noreferrer">LAO Tariff Handbook</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.ontario.ca/page/search-court-cases-online" target="_blank" rel="noopener noreferrer">Court Cases Online Search</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://criminalnotebook.ca/" target="_blank" rel="noopener noreferrer">Criminal Law Notebook</a></li>
+          </ul>
+          <div class="card-footer">LEGALPRACTICE</div>
+        </article>
+
+        <article class="card" id="portals" data-search="portals zoom voip lso connects lawpro">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            </div>
+            <h3 class="card-title">Portals</h3>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.zoom.us/signin#/login" target="_blank" rel="noopener noreferrer">Zoom</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://voip.ms/signin/index.php?ln=en" target="_blank" rel="noopener noreferrer">VoIP.ms</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://lsoconnects.lso.ca/" target="_blank" rel="noopener noreferrer">LSO Connects</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://my.lawpro.ca/welcome" target="_blank" rel="noopener noreferrer">LawPro</a></li>
+          </ul>
+          <div class="card-footer">PORTALS</div>
+        </article>
+
+        <article class="card" data-search="ai tools chatgpt perplexity grok gemini claude copilot notebooklm deepseek">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5z"/><path d="M5 18l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/><path d="M19 14l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/></svg>
+            </div>
+            <h3 class="card-title">AI Tools</h3>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://grok.com/" target="_blank" rel="noopener noreferrer">Grok</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer">Google Gemini</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://copilot.microsoft.com/chats/QLxBagSuyj8NcaMCVgPN7" target="_blank" rel="noopener noreferrer">Microsoft Copilot</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer">NotebookLM</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg><a href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">DeepSeek</a></li>
+          </ul>
+          <div class="card-footer">AITOOLS</div>
+        </article>
+
+        <div class="no-results" id="noResults" hidden>No links match your search.</div>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        <span>&copy; 2026 MacDonald Law. All rights reserved.</span>
+        <div class="links">
+          <a href="allcourt.html">Court Directory</a>
+          <a href="https://macdonaldlaw.ca/" target="_blank" rel="noopener noreferrer">MacDonaldLaw.ca</a>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    // Time-based greeting
+    (function(){
+      const hour = new Date().getHours();
+      let greet = 'Hello';
+      if (hour >= 5 && hour < 12) greet = 'Good morning';
+      else if (hour >= 12 && hour < 17) greet = 'Good afternoon';
+      else if (hour >= 17 && hour < 22) greet = 'Good evening';
+      else greet = 'Late night';
+      document.getElementById('greeting').textContent = greet;
+    })();
+
+    // Open external links safely
+    document.querySelectorAll('a[target="_blank"]').forEach(a => {
+      if (!a.rel.includes('noopener')) a.rel = (a.rel + ' noopener noreferrer').trim();
+    });
+
+    // Search filter
+    (function(){
+      const wrap = document.getElementById('searchWrap');
+      const input = document.getElementById('searchInput');
+      const cards = Array.from(document.querySelectorAll('.card'));
+      const noResults = document.getElementById('noResults');
+
+      function debounce(fn, wait=120){ let t; return (...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),wait);} }
+      function normalize(s){ return String(s||'').trim().toLowerCase(); }
+
+      function filter(){
+        const q = normalize(input.value);
+        let anyMatch = false;
+        cards.forEach(card => {
+          const tags = normalize(card.dataset.search || '');
+          const lis = Array.from(card.querySelectorAll('li'));
+          let cardMatch = false;
+          if (q === ''){
+            card.classList.remove('hidden');
+            lis.forEach(li => li.classList.remove('hidden'));
+            cardMatch = true;
+          } else {
+            lis.forEach(li => {
+              const text = normalize(li.textContent);
+              const m = text.includes(q) || tags.includes(q);
+              li.classList.toggle('hidden', !m);
+              if (m) cardMatch = true;
+            });
+            const title = normalize(card.querySelector('.card-title')?.textContent);
+            if (title.includes(q) || tags.includes(q)) cardMatch = true;
+            card.classList.toggle('hidden', !cardMatch);
+          }
+          if (cardMatch) anyMatch = true;
+        });
+        noResults.hidden = anyMatch || q === '';
+      }
+
+      input.addEventListener('input', debounce(filter, 120));
+
+      document.addEventListener('keydown', (e) => {
+        const tag = document.activeElement && document.activeElement.tagName;
+        if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA' && !e.ctrlKey && !e.metaKey && !e.altKey){
+          e.preventDefault();
+          wrap.classList.add('open');
+          input.focus();
+        }
+        if (e.key === 'Escape' && document.activeElement === input){
+          input.value = '';
+          filter();
+          wrap.classList.remove('open');
+          input.blur();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
