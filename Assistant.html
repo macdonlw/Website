@@ -646,7 +646,7 @@
         <span class="chip">⇧↵ Google</span>
       </label>
       <div class="date-chip" id="dateChip"></div>
-      <div class="avatar">A</div>
+      <div class="avatar" id="avatar">A</div>
     </div>
 
     <!-- Greeting -->
@@ -906,6 +906,11 @@
     const timeOpts = { hour:'numeric', minute:'2-digit' };
     document.getElementById('sbDateTime').textContent =
       d.toLocaleDateString(undefined, opts) + ' · ' + d.toLocaleTimeString(undefined, timeOpts);
+  }
+
+  function renderAvatar(){
+    const initial = state.userName ? state.userName.trim().charAt(0).toUpperCase() : 'A';
+    document.getElementById('avatar').textContent = initial || 'A';
   }
 
   function renderSidebarName(){
@@ -1306,6 +1311,7 @@
     saveState();
     renderGreeting();
     renderSidebarName();
+    renderAvatar();
     closeNameModal();
   }
   document.getElementById('nameSave').addEventListener('click', saveName);
@@ -1334,6 +1340,7 @@
     renderCategories();
     renderGreeting();
     renderSidebarName();
+    renderAvatar();
     renderDate();
   }
 
