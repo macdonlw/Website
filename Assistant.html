@@ -320,7 +320,7 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
-    .fav-card .cat{
+    .fav-card .fav-cat{
       font-size: 0.65rem; color: var(--muted);
       margin-top: auto;
       padding-top: 0.25rem;
@@ -932,7 +932,7 @@
         <span class="star" title="Unpin">★</span>
         <div class="ico">${escapeHtml(found.link.name[0])}</div>
         <div class="name">${escapeHtml(found.link.name)}</div>
-        <div class="cat">${escapeHtml(found.category.name)}</div>
+        <div class="fav-cat">${escapeHtml(found.category.name)}</div>
         <span class="handle" title="Drag to reorder">⋮⋮</span>
       `;
       card.addEventListener('click', (e) => {
